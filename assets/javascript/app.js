@@ -37,10 +37,10 @@ $("#add-train-btn").on("click", function (event) {
   database.ref().push(newTrain);
 
   // Logs Object Data
-  console.log(newTrain.name);
-  console.log(newTrain.destination);
-  console.log(newTrain.time);
-  console.log(newTrain.frequency);
+  // console.log(newTrain.name);
+  // console.log(newTrain.destination);
+  // console.log(newTrain.time);
+  // console.log(newTrain.frequency);
 
   alert("Train successfully added");
 
@@ -62,24 +62,48 @@ database.ref().on("child_added", function (childSnapshot) {
   var trainTime = childSnapshot.val().time;
   var trainFrequency = childSnapshot.val().frequency;
 
+  // console.log("frequency snapshot: " + trainFrequency);
+
+  // Calculate Next Arrival & Minutes Away
+
+  var convertedTrainTime = moment(trainTime, "HH:mm"); //.subtract(1,"years")
+  console.log("Converted Train Time: "+convertedTrainTime)
+  var timeDiff = moment().diff(moment(convertedTrainTime), "minutes");
+  console.log("Time Difference: "+timeDiff);
+  var tRemainder = timeDiff % trainFrequency;
+  console.log("Time Remainder: "+tRemainder)
+  var timeToArrival = trainFrequency - tRemainder;
+  var trainArrival = moment().add(timeToArrival, "minutes").format("HH:mm A");
+
+
   // Log New Entry Data
-  console.log(trainName);
-  console.log(trainDestination);
-  console.log(trainTime);
-  console.log(trainFrequency);
+  console.log("Name: " + trainName);
+  console.log("Name: " + trainDestination);
+  console.log("Arrives Every: " + trainFrequency + " Minutes");
+  console.log("Arrives At: " + trainArrival);
+  console.log("Minutes Away: " + timeToArrival);
+  
 
   // Update Table Data
   var newRow = $("<tr>").append(
     $("<td>").text(trainName),
     $("<td>").text(trainDestination),
-    $("<td>").text(trainTime),
-    $("<td>").text(trainFrequency)
+    $("<td>").text(trainFrequency+" minutes"),
+    $("<td>").text(trainArrival),
+    $("<td>").text(timeToArrival)
   );
 
   // Append New Data
   $("#train-table > tbody").append(newRow);
 
 });
+
+interval = setInterval(displayTime,1000)
+
+function displayTime() {
+  currentTime = moment();
+  $("#timeDisplay").text("Current Time: "+moment(currentTime).format("hh:mm A"))
+}
 
   //FOR REFERENCE
 

@@ -29,9 +29,9 @@
   <div class="container">
 
     <!-- Jumbotron -->
-    <div class="jumbotron" style="background-color: black; color: white">
+    <div class="jumbotron" style="background-color: #1e7ac5; color: white">
       <h1 class="text-center">Train Schedules</h1>
-      <h3 class="text-center">Subtitle Goes Here Eventually</h3>
+      <h3 class="text-center" id="timeDisplay">00:00</h3>
     </div>
 
     <!-- Train Display -->
@@ -48,8 +48,9 @@
                 <tr>
                   <th scope="col">Train Name</th>
                   <th scope="col">Destination</th>
-                  <th scope="col">First Train</th>
                   <th scope="col">Frequency</th>
+                  <th scope="col">Next Arrival</th>
+                  <th scope="col">Minutes Away</th>
                 </tr>
               </thead>
               <tbody>
@@ -82,13 +83,13 @@
               </div>
               <!-- First Departure Time -->
               <div class="form-group">
-                <label for="time-input">First Departure</label>
+                <label for="time-input">First Departure (Please Input In 24Hr format)</label>
                 <input class="form-control" id="time-input" placeholder="24:00" type="text">
               </div>
               <!-- Frequency -->
               <div class="form-group">
-                <label for="frequency-input">Frequency</label>
-                <input class="form-control" id="frequency-input" placeholder="" type="text">
+                <label for="frequency-input">Frequency (Minutes)</label>
+                <input class="form-control" id="frequency-input" placeholder="Arrives Every __ Minutes" type="text">
               </div>
               <button class="btn btn-primary float-right" id="add-train-btn">Submit</button>
             </form>
